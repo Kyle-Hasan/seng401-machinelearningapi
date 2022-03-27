@@ -5,6 +5,7 @@ Django==4.0.2
 filelock==3.6.0
 Flask==2.0.3
 Flask-Cors==3.0.10
+Flask-MySQLdb==1.0.1
 fonttools==4.29.1
 google-play-scraper==1.0.3
 huggingface-hub==0.4.0
