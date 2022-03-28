@@ -88,6 +88,10 @@ def displayResult():
     result["Summary"] = summary
     result["timePeriod"] = mainResult
     result["Bugs"] = {"issues": issues, "Status": status} 
+    result["ratingsPieChart"] = "https://github.com/Kyle-Hasan/seng401-machinelearningapi/blob/main/"+company+"/ratingsPieChart.jpg"
+    result["issuesPieChart"] = "https://github.com/Kyle-Hasan/seng401-machinelearningapi/blob/main/"+company+"/issuesPieChart.jpg"
+    result["IssuesBarChart"] = "https://github.com/Kyle-Hasan/seng401-machinelearningapi/blob/main/"+company+"/issuesBarChart.jpg"
+    result["sentimentPieChart"] = "https://github.com/Kyle-Hasan/seng401-machinelearningapi/blob/main/"+company+"/sentimentPieChart.jpg"
 
     return jsonify(result), 200
 
