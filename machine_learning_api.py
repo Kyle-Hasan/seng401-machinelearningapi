@@ -28,7 +28,7 @@ def displayResult():
     company = request.args.get('company')
     print("result page")
     print(company)
-    df = pd.read_csv ('app_reviews_slack.csv')
+    df = pd.read_csv ('roxy\\app_reviews_slack.csv')
 
     summary = df['Summary'][0]
     numPatches = df['numberOfPatches'][0]
@@ -69,10 +69,10 @@ def displayResult():
     mainResult=[]
     for i in range(4):
         result=[]
-        result.append({"topic": df['Status'][0], "reviews": issue1split[3-i]})
-        result.append({"topic": df['Status'][1], "reviews": issue2split[3-i]})
-        result.append({"topic": df['Status'][2], "reviews": issue3split[3-i]})
-        result.append({"topic": df['Status'][3], "reviews": issue4split[3-i]})
+        result.append({"topic": df['Status'][0], "reviews": issue1split[3-i].tolist()})
+        result.append({"topic": df['Status'][1], "reviews": issue2split[3-i].tolist()})
+        result.append({"topic": df['Status'][2], "reviews": issue3split[3-i].tolist()})
+        result.append({"topic": df['Status'][3], "reviews": issue4split[3-i].tolist()})
         mainResult.append(result)
 
     issues = []
@@ -86,10 +86,11 @@ def displayResult():
     result["numberOfReviews"] = numReviews
     result["numberOfPatches"] = numPatches
     result["Summary"] = summary
-    #result["timePeriod"] = mainResult
+    result["timePeriod"] = mainResult
     result["Bugs"] = {"issues": issues, "Status": status} 
-    print(result)
+
     return jsonify(result), 200
+
 
 def get_sentiment_score(text):
   tokens = tokenizer.encode(text, return_tensors='pt')
