@@ -28,7 +28,7 @@ def displayResult():
     company = request.args.get('company')
     print("result page")
     print(company)
-    df = pd.read_csv ('roxy\\app_reviews_slack.csv')
+    df = pd.read_csv ('app_reviews_slack.csv')
 
     summary = df['Summary'][0]
     numPatches = df['numberOfPatches'][0]
