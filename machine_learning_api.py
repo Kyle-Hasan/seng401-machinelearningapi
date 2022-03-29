@@ -28,7 +28,7 @@ def displayResult():
     company = request.args.get('company')
     print("result page")
     print(company)
-    df = pd.read_csv ('app_reviews_slack.csv')
+    df = pd.read_csv ('roxy\\app_reviews_slack.csv')
 
     summary = df['Summary'][0]
     numPatches = df['numberOfPatches'][0]
@@ -42,14 +42,16 @@ def displayResult():
     my_formatter = "{0:.2f}"
     for i in range(len(df['processed_review'])):
         
-        if(df['issue1'][i]>df['issue2'][i] and df['issue1'][i]>df['issue2'][i] and df['issue3'][i]>df['issue4'][i]):
-            issue1.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue1'][i]*100)})
-        elif(df['issue2'][i]>df['issue1'][i] and df['issue2'][i]>df['issue3'][i] and df['issue2'][i]>df['issue4'][i]):
-            issue2.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue2'][i]*100)})
-        elif(df['issue3'][i]>df['issue1'][i] and df['issue3'][i]>df['issue2'][i] and df['issue3'][i]>df['issue4'][i]):
-            issue3.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue3'][i]*100)})
-        else:
-            issue4.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue4'][i]*100), "topic": df['Status'][3]})
+        if(len(df['processed_review'][i])>80):
+
+            if(df['issue1'][i]>df['issue2'][i] and df['issue1'][i]>df['issue3'][i] and df['issue1'][i]>df['issue4'][i]):
+                issue1.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue1'][i]*100)})
+            elif(df['issue2'][i]>df['issue1'][i] and df['issue2'][i]>df['issue3'][i] and df['issue2'][i]>df['issue4'][i]):
+                issue2.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue2'][i]*100)})
+            elif(df['issue3'][i]>df['issue1'][i] and df['issue3'][i]>df['issue2'][i] and df['issue3'][i]>df['issue4'][i]):
+                issue3.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue3'][i]*100)})
+            else:
+                issue4.append({"negativeReviews": df['processed_review'][i], "scores": my_formatter.format(df['issue4'][i]*100), "topic": df['Status'][3]})
 
     issue1[:] = [x for x in issue1 if float(x['scores']) >= 70.0]
     issue2[:] = [x for x in issue2 if float(x['scores']) >= 70.0]
@@ -69,10 +71,10 @@ def displayResult():
     mainResult=[]
     for i in range(4):
         result=[]
-        result.append({"topic": df['Status'][0], "reviews": issue1split[3-i].tolist()})
-        result.append({"topic": df['Status'][1], "reviews": issue2split[3-i].tolist()})
-        result.append({"topic": df['Status'][2], "reviews": issue3split[3-i].tolist()})
-        result.append({"topic": df['Status'][3], "reviews": issue4split[3-i].tolist()})
+        result.append({"topic": df['issueName'][0], "reviews": issue1split[i].tolist()})
+        result.append({"topic": df['issueName'][1], "reviews": issue2split[i].tolist()})
+        result.append({"topic": df['issueName'][2], "reviews": issue3split[i].tolist()})
+        result.append({"topic": df['issueName'][3], "reviews": issue4split[i].tolist()})
         mainResult.append(result)
 
     issues = []
@@ -81,6 +83,8 @@ def displayResult():
     for i in range(4):
         issues.append(df['issueName'][i])
         status.append(df['Status'][i])
+
+    #company = "Uber"
 
     result = {}
     result["numberOfReviews"] = numReviews
