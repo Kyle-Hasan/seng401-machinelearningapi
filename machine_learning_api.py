@@ -30,7 +30,9 @@ def displayResult():
    
     print("result page")
     print(company)
-    df = pd.read_csv ('app_reviews_slack.csv')
+    
+    fileName = "app_reviews_"+company+".csv"
+    df = pd.read_csv (fileName)
 
     summary = df['Summary'][0]
     numPatches = df['numberOfPatches'][0]
