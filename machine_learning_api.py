@@ -87,6 +87,7 @@ def displayResult():
     #company = "Uber"
 
     result = {}
+    result["company"] = company
     result["numberOfReviews"] = numReviews
     result["numberOfPatches"] = numPatches
     result["Summary"] = summary
