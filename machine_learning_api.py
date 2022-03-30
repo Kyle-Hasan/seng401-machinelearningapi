@@ -26,6 +26,8 @@ def displayResult():
     # result,continuation_token= reviews('com.Slack',lang='en',country='us',sort=Sort.MOST_RELEVANT, count=1000)
 
     company = request.args.get('company')
+    userCompany = request.args.get('userCompany')
+   
     print("result page")
     print(company)
     df = pd.read_csv ('app_reviews_slack.csv')
@@ -86,13 +88,18 @@ def displayResult():
 
     #company = "Uber"
 
+    
+        
+    
     result = {}
+    
+    if userCompany==company:
+        result["Bugs"] = {"issues": issues, "Status": status} 
     result["company"] = company
     result["numberOfReviews"] = numReviews
     result["numberOfPatches"] = numPatches
     result["Summary"] = summary
     result["timePeriod"] = mainResult
-    result["Bugs"] = {"issues": issues, "Status": status} 
     result["ratingsPieChart"] = "https://github.com/Kyle-Hasan/seng401-machinelearningapi/blob/main/"+company+"/ratingsPieChart.jpg"
     result["issuesPieChart"] = "https://github.com/Kyle-Hasan/seng401-machinelearningapi/blob/main/"+company+"/issuesPieChart.jpg"
     result["IssuesBarChart"] = "https://github.com/Kyle-Hasan/seng401-machinelearningapi/blob/main/"+company+"/issuesBarChart.jpg"
