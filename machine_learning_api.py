@@ -116,7 +116,7 @@ def get_sentiment_score(text):
   return int(torch.argmax(result.logits))+1
 
 @app.route('/generateAnalytics')    # results for apps are already cached for demo
-def generateAnalytcis():
+def generateAnalytics():
 
     app = request.json['company']
     result,continuation_token= reviews('com.ubercab',lang='en',country='us',sort=Sort.MOST_RELEVANT, count=10000)
